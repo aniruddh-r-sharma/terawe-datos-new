@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:terawe_flutter_project/screens/products_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as JSON;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,6 +15,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  bool _isLoggedIn = false;
+  Map userProfile;
 
   String email;
   String password;
@@ -215,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        print('facebook button');
+                        print('Facebook Login');
                       },
                       icon: FaIcon(
                         FontAwesomeIcons.facebook,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:terawe_flutter_project/constants.dart';
+import 'package:terawe_flutter_project/screens/classify_screen_temp.dart';
 import 'package:terawe_flutter_project/screens/image_screen.dart';
 
 class ProductTile extends StatelessWidget {
@@ -98,6 +99,13 @@ class ProductTile extends StatelessWidget {
           trailing: RawMaterialButton(
             onPressed: () {
               print('add store');
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return ClassifyScreen(
+                    imageName: productName,
+                  );
+                },
+              ));
             },
             fillColor: Colors.blue,
             shape: CircleBorder(),

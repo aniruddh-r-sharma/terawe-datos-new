@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class ImageScreen extends StatefulWidget {
   final String imageName;
@@ -57,6 +60,25 @@ class _ImageScreenState extends State<ImageScreen> {
     }
   }
 
+  void Upload(File file) async {
+    String fileName = file.path.split('/').last;
+
+    FormData data = FormData.fromMap({
+      "file": await MultipartFile.fromFile(
+        file.path,
+        filename: fileName,
+      ),
+    });
+
+    Dio dio = new Dio();
+
+    dio
+        .post("https://smartretailflask.azurewebsites.net/rest/classify",
+            data: data)
+        .then((response) => print(response))
+        .catchError((error) => print(error));
+  }
+
   @override
   void initState() {
     getCurrentUser();
@@ -74,6 +96,7 @@ class _ImageScreenState extends State<ImageScreen> {
           return GestureDetector(
             onTap: () {
               setState(() {});
+              Upload(File(path));
             },
             child: Container(
               color: Colors.white,
