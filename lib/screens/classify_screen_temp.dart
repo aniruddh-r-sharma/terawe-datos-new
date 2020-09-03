@@ -78,19 +78,20 @@ class _ClassifyScreenState extends State<ClassifyScreen> {
         data: data);
 
     print(response);
-    api_response = response;
-    _showDialog();
+    api_response = json.decode(json.encode(response.data));
+    print(api_response['class_output']);
+    _showDialog(api_response['class_output'].toString());
   }
 
-  void _showDialog() {
+  void _showDialog(String product) {
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Alert Dialog title"),
-          content: new Text("Alert Dialog body"),
+          title: new Text("Classification Complete"),
+          content: new Text(product),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
